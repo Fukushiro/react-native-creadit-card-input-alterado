@@ -69,7 +69,6 @@ const POSTAL_CODE_INPUT_WIDTH = getWidthValue(120); // https://github.com/yannic
     additionalInputsProps: PropTypes.objectOf(
       PropTypes.shape(TextInput.propTypes)
     ),
-    canScan: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -97,7 +96,6 @@ const POSTAL_CODE_INPUT_WIDTH = getWidthValue(120); // https://github.com/yannic
     placeholderColor: "gray",
     allowScroll: false,
     additionalInputsProps: {},
-    canScan: false,
   };
 
   componentDidMount = () => this._focus(this.props.focused);
@@ -187,7 +185,6 @@ const POSTAL_CODE_INPUT_WIDTH = getWidthValue(120); // https://github.com/yannic
       cardScale,
       cardFontFamily,
       cardBrandIcons,
-      canScan,
     } = this.props;
 
     return (
@@ -237,7 +234,7 @@ const POSTAL_CODE_INPUT_WIDTH = getWidthValue(120); // https://github.com/yannic
             {
               // Top 5 para quando tiver mais um field
             }
-            {this.props.canScan && (
+            {false && (
               <View
                 style={{
                   zIndex: 1000,
