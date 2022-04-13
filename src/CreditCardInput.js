@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import ReactNative, {
   NativeModules,
   View,
@@ -10,17 +10,17 @@ import ReactNative, {
   TextInput,
   ViewPropTypes,
   TouchableOpacity,
-} from 'react-native';
-import {CardIOModule, CardIOUtilities} from 'react-native-awesome-card-io';
-import CreditCard from './CardView';
-import CCInput from './CCInput';
-import {InjectedProps} from './connectToState';
-import Scan from '../images/Scan';
-import {getHeightValue, getWidthValue} from '../../../utils/ajustScreen';
+} from "react-native";
+import { CardIOModule, CardIOUtilities } from "react-native-awesome-card-io";
+import CreditCard from "./CardView";
+import CCInput from "./CCInput";
+import { InjectedProps } from "./connectToState";
+import Scan from "../images/Scan";
+import { getHeightValue, getWidthValue } from "../../../utils/ajustScreen";
 
 const s = StyleSheet.create({
   container: {
-    alignItems: 'center'
+    alignItems: "center",
   },
   form: {
     marginTop: getHeightValue(20),
@@ -29,7 +29,7 @@ const s = StyleSheet.create({
     marginLeft: getWidthValue(20),
   },
   inputLabel: {
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   input: {
     height: getHeightValue(40),
@@ -39,7 +39,7 @@ const s = StyleSheet.create({
 const CVC_INPUT_WIDTH = getHeightValue(70);
 const EXPIRY_INPUT_WIDTH = CVC_INPUT_WIDTH;
 const CARD_NUMBER_INPUT_WIDTH_OFFSET = 40;
-const CARD_NUMBER_INPUT_WIDTH = '87%';
+const CARD_NUMBER_INPUT_WIDTH = "87%";
 const NAME_INPUT_WIDTH = CARD_NUMBER_INPUT_WIDTH;
 const PREVIOUS_FIELD_OFFSET = 40;
 const POSTAL_CODE_INPUT_WIDTH = getWidthValue(120); // https://github.com/yannickcr/eslint-plugin-react/issues/106
@@ -69,44 +69,46 @@ const POSTAL_CODE_INPUT_WIDTH = getWidthValue(120); // https://github.com/yannic
     additionalInputsProps: PropTypes.objectOf(
       PropTypes.shape(TextInput.propTypes)
     ),
+    canScan: PropTypes.bool,
   };
 
   static defaultProps = {
     cardViewSize: {},
     labels: {
       name: "CARDHOLDER'S NAME",
-      number: 'CARD NUMBER',
-      expiry: 'EXPIRY',
-      cvc: 'CVC/CCV',
-      postalCode: 'POSTAL CODE'
+      number: "CARD NUMBER",
+      expiry: "EXPIRY",
+      cvc: "CVC/CCV",
+      postalCode: "POSTAL CODE",
     },
     placeholders: {
-      name: 'Full Name',
-      number: '1234 5678 1234 5678',
-      expiry: 'MM/YY',
-      cvc: 'CVC',
-      postalCode: '34567'
+      name: "Full Name",
+      number: "1234 5678 1234 5678",
+      expiry: "MM/YY",
+      cvc: "CVC",
+      postalCode: "34567",
     },
     inputContainerStyle: {
       borderBottomWidth: 1,
-      borderBottomColor: 'black'
+      borderBottomColor: "black",
     },
-    validColor: '',
-    invalidColor: 'red',
-    placeholderColor: 'gray',
+    validColor: "",
+    invalidColor: "red",
+    placeholderColor: "gray",
     allowScroll: false,
     additionalInputsProps: {},
+    canScan: false,
   };
 
   componentDidMount = () => this._focus(this.props.focused);
 
-  componentWillReceiveProps = newProps => {
+  componentWillReceiveProps = (newProps) => {
     if (this.props.focused !== newProps.focused) {
       this._focus(newProps.focused);
     }
   };
 
-  _focus = field => {
+  _focus = (field) => {
     if (!field) {
       return;
     }
@@ -116,10 +118,10 @@ const POSTAL_CODE_INPUT_WIDTH = getWidthValue(120); // https://github.com/yannic
 
     NativeModules.UIManager.measureLayoutRelativeToParent(
       nodeHandle,
-      e => {
+      (e) => {
         throw e;
       },
-      x => {
+      (x) => {
         scrollResponder.scrollTo({
           x: Math.max(x - PREVIOUS_FIELD_OFFSET, 0),
           animated: true,
@@ -129,7 +131,7 @@ const POSTAL_CODE_INPUT_WIDTH = getWidthValue(120); // https://github.com/yannic
     );
   };
 
-  _inputProps = field => {
+  _inputProps = (field) => {
     const {
       inputStyle,
       labelStyle,
@@ -176,7 +178,7 @@ const POSTAL_CODE_INPUT_WIDTH = getWidthValue(120); // https://github.com/yannic
       cardImageFront,
       cardImageBack,
       inputContainerStyle,
-      values: {number, expiry, cvc, name, type},
+      values: { number, expiry, cvc, name, type },
       focused,
       allowScroll,
       requiresName,
@@ -185,6 +187,7 @@ const POSTAL_CODE_INPUT_WIDTH = getWidthValue(120); // https://github.com/yannic
       cardScale,
       cardFontFamily,
       cardBrandIcons,
+      canScan,
     } = this.props;
 
     return (
@@ -197,7 +200,7 @@ const POSTAL_CODE_INPUT_WIDTH = getWidthValue(120); // https://github.com/yannic
           imageFront={cardImageFront}
           imageBack={cardImageBack}
           customIcons={cardBrandIcons}
-          name={requiresName ? name : ' '}
+          name={requiresName ? name : " "}
           number={number}
           expiry={expiry}
           cvc={cvc}
@@ -209,88 +212,95 @@ const POSTAL_CODE_INPUT_WIDTH = getWidthValue(120); // https://github.com/yannic
           showsHorizontalScrollIndicator={false}
           style={{
             ...s.form,
-            alignSelf: 'center',
-            marginTop: '5%',
-            width: '80%',
+            alignSelf: "center",
+            marginTop: "5%",
+            width: "80%",
             flexGrow: 1,
-          }}>
+          }}
+        >
           <View
             style={{
               flex: 1,
               borderRadius: 20,
-              shadowColor: 'rgba(22, 22, 22, 0.25)',
+              shadowColor: "rgba(22, 22, 22, 0.25)",
               elevation: 0.1,
-              shadowOffset: {width: 0.1, height: 0.1},
+              shadowOffset: { width: 0.1, height: 0.1 },
               shadowOpacity: 0.5,
-              flexDirection: 'column',
-              padding: '5%',
-              backgroundColor: '#FFFF',
+              flexDirection: "column",
+              padding: "5%",
+              backgroundColor: "#FFFF",
               height: getHeightValue(340),
-              justifyContent: 'center',
-              position: 'relative',
-            }}>
+              justifyContent: "center",
+              position: "relative",
+            }}
+          >
             {
               // Top 5 para quando tiver mais um field
             }
-            <View
-              style={{
-                zIndex: 1000,
-                position: 'absolute',
-                top: getHeightValue(5),
-                right: getWidthValue(5)
-              }}>
-              <TouchableOpacity
-                onPress={() => {
-                  this.props.onPressScan();
-                }}>
-                <Scan />
-              </TouchableOpacity>
-            </View>
+            {this.props.canScan && (
+              <View
+                style={{
+                  zIndex: 1000,
+                  position: "absolute",
+                  top: getHeightValue(5),
+                  right: getWidthValue(5),
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.onPressScan();
+                  }}
+                >
+                  <Scan />
+                </TouchableOpacity>
+              </View>
+            )}
             <CCInput
-              {...this._inputProps('number')}
+              {...this._inputProps("number")}
               keyboardType="numeric"
               containerStyle={[
-                {marginTop: '5%'},
+                { marginTop: "5%" },
                 s.inputContainer,
                 inputContainerStyle,
-                {width: CARD_NUMBER_INPUT_WIDTH},
+                { width: CARD_NUMBER_INPUT_WIDTH },
               ]}
             />
             <View
               style={{
                 marginTop: getHeightValue(5),
-                flexDirection: 'row',
-                width: '93%',
-              }}>
+                flexDirection: "row",
+                width: "93%",
+              }}
+            >
               <CCInput
-                {...this._inputProps('expiry')}
+                {...this._inputProps("expiry")}
                 keyboardType="numeric"
                 containerStyle={[
                   s.inputContainer,
                   inputContainerStyle,
-                  {width: EXPIRY_INPUT_WIDTH},
+                  { width: EXPIRY_INPUT_WIDTH },
                 ]}
               />
               {requiresCVC && (
                 <CCInput
-                  {...this._inputProps('cvc')}
+                  {...this._inputProps("cvc")}
                   keyboardType="numeric"
                   containerStyle={[
                     s.inputContainer,
                     inputContainerStyle,
-                    {width: CVC_INPUT_WIDTH},
+                    { width: CVC_INPUT_WIDTH },
                   ]}
                 />
               )}
             </View>
             {requiresName && (
-              <View style={{marginTop: getHeightValue(5)}}>
+              <View style={{ marginTop: getHeightValue(5) }}>
                 <CCInput
-                  {...this._inputProps('name')}
+                  {...this._inputProps("name")}
                   containerStyle={[
                     s.inputContainer,
                     inputContainerStyle,
-                    {width: NAME_INPUT_WIDTH},
+                    { width: NAME_INPUT_WIDTH },
                   ]}
                 />
               </View>
